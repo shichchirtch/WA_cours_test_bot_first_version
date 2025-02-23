@@ -1,0 +1,27 @@
+body {
+    background-color: #7cfc00; /* Салатовый фон */
+    color: black; /* Белый текст */
+    font-size: larger; /* Увеличенный шрифт */
+    text-align: center;
+}
+
+.container {
+    max-width: 400px;
+    margin: auto;
+    font-weight: bold;
+    font-size: larger;
+}
+
+input, select, button {
+    display: block;
+    width: 100%;
+    margin: 10px 0;
+    padding: 10px;
+    font-size: larger;
+}
+
+/* Увеличенный и жирный шрифт для подписей к полям ввода */
+label {
+    font-size: x-large;
+    font-weight: bold;
+}

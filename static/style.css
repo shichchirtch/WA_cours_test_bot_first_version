@@ -1,0 +1,26 @@
+body {
+    background-color: purple;
+    color: white;
+    font-family: Arial, sans-serif;
+    text-align: center;
+    font-weight: bold;
+
+}
+
+img {
+    width: 200px;
+    height: auto;
+    border-radius: 10px;
+}
+
+a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+button {
+    font-size: 20px;
+    padding: 15px 25px;
+    border-radius: 15px;
+}

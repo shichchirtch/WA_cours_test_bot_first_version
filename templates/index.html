@@ -1,0 +1,25 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <title>Меню</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <h1>Меню</h1>
+    <div class="pizza-list">
+        {% for pizza in pizzas %}
+            <a href="{{ url_for('pizza_detail', pizza_id=pizza.id) }}">
+                <img src="{{ url_for('static', filename=pizza.image) }}" alt="{{ pizza.name }}">
+                <p>{{ pizza.name }}</p>
+            </a>
+        {% endfor %}
+    </div>
+{#<script src="script.js"></script>#}
+</body>
+</html>
+
+

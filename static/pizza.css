@@ -1,0 +1,38 @@
+/* Устанавливаем розовый фон для страницы пиццы */
+body.pizza-page {
+    background-color: hotpink;
+    color: white;
+    font-family: Arial, sans-serif;
+    text-align: center;
+    font-weight: bold;
+}
+
+/* Увеличиваем размер изображения пиццы */
+img {
+    width: 400px; /* В два раза больше */
+    height: auto;
+    border-radius: 10px;
+}
+
+/* Стили для кнопок */
+button {
+    font-size: 20px;
+    padding: 15px 25px;
+    border-radius: 15px;
+    border: none;
+    cursor: pointer;
+}
+
+/* Кнопки увеличения и уменьшения количества */
+.quantity button {
+    font-size: 18px;
+    padding: 10px 15px;
+    margin: 5px;
+}
+
+/* Ссылка "Вернуться в меню" */
+a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+}
