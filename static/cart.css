@@ -1,8 +1,10 @@
 body {
-    background-color: #7cfc00; /* Салатовый фон */
+    background-color: #80ed50; /* Салатовый фон */
     color: black; /* Белый текст */
     font-size: larger; /* Увеличенный шрифт */
     text-align: center;
+    margin: 0;
+    padding: 0;
 }
 
 .container {
@@ -24,4 +26,33 @@ input, select, button {
 label {
     font-size: x-large;
     font-weight: bold;
+}
+
+header {
+    background-color: #853cb4;
+    color: white;
+    text-align: center;
+    padding: 10px;
+    font-size: 20px;
+    font-family: 'Comic Sans MS', cursive, sans-serif;
+    text-shadow: 2px 2px 5px orange;
+    margin-top: 0;
+    line-height:0;
+
+}
+
+footer {
+    background-color: #9370DB;
+    padding: 10px;
+    text-align: center;
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+    line-height:0;
+}
+
+footer a {
+    color: white;
+    text-decoration: none;
+    font-size: 15px;
 }

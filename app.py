@@ -27,9 +27,6 @@ def pizza_detail(pizza_id):
 
 @app.route("/cart", methods=["GET", "POST"])
 def cart_page():
-    print('We are here')
-    print('request.method = ', request.method)
-    print('request.headers =', request.headers)
 
     if request.method == "POST":
         data = request.get_json()
@@ -44,13 +41,10 @@ def cart_page():
 
         cart.clear()
         return jsonify({"success": True})
-
     print(cart, type(cart))
-    # 🔥 Подсчет итоговой суммы в Python
+    # Подсчет итоговой суммы в Python
     total_price = sum(item["quantity"] * 15 for item in cart)
-
     return render_template("cart.html", cart=cart, total_price=total_price)
-    # return render_template("cart.html", cart=cart)
 
 
 @app.route("/add-to-cart", methods=["POST"])

@@ -43,4 +43,23 @@ document.getElementById("orderForm").addEventListener("submit", function(event) 
     });
 });
 
+document.getElementById("resetOrder").addEventListener("click", function(event) {
+    event.preventDefault(); // Отменяем стандартный переход по ссылке
+
+    fetch("/reset-cart", { method: "POST" }) // Отправляем запрос на сервер для очистки корзины
+        .then(response => response.json()) // Преобразуем ответ в JSON
+        .then(data => {
+            if (data.success) {
+                window.location.href = "/"; // Перенаправляем пользователя на главную страницу
+            } else {
+                alert("Ошибка при очистке корзины!");
+            }
+        })
+        .catch(error => {
+            alert("Ошибка сети при очистке корзины!");
+        });
+});
+
+
+
 
