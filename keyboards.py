@@ -5,7 +5,7 @@ web_button = (
         text="Открыть Web App",
         web_app=WebAppInfo(
         url=
-        "https://f310-2a00-20-4-8e9b-94f9-7fdb-4c12-bf66.ngrok-free.app")
+        "https://4437-2a00-20-8-1dfb-c3-5496-c60c-67b1.ngrok-free.app")
     )
 )
 

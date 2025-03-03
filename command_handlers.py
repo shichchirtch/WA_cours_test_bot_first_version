@@ -17,7 +17,7 @@ async def process_start_command(message: Message, state: FSMContext):
         print(message.from_user.id)
         users_db[message.from_user.id] = deepcopy(user_dict)
         await state.set_state(FSM_ST.after_start)
-        await state.set_data({'card_list':[], 'cart_pos':0, 'timer':0, 'leader':0})
+        await state.set_data({'name':user_name, 'order':[]})
         await message.answer(text=f'{html.bold(html.quote(user_name))}, '
                                   f'Hallo !\nI am MINI APP Bot'
                                   f'🎲',
@@ -32,8 +32,6 @@ async def send_command(message: Message, state: FSMContext):
     await state.set_state(FSM_ST.swnd_msg)
     await message.answer('Enter you message')
 
-# First Accaunt = 6685637602
-# Second Accaunt = 6831521683
 
 @ch_router.message(StateFilter(FSM_ST.swnd_msg))
 async def sending_msg_other_user(message: Message, state: FSMContext):

@@ -7,6 +7,7 @@ import threading, asyncio
 def run_flask():
     app.run(host="0.0.0.0", port=5000, debug=False)  # ОТКЛЮЧИ debug=True!
 
+
 async def main():
     await dp.storage.set_data(key=bot_storage_key, data={})
     # await set_main_menu(bot)

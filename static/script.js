@@ -10,23 +10,16 @@ document.addEventListener("DOMContentLoaded", function () {
         const addToCartBtn = document.querySelector("#add-to-cart");
         const confirmOrderBtn = document.querySelector("#confirm-order");
 
-        console.log("decreaseBtn:", decreaseBtn);
-        console.log("increaseBtn:", increaseBtn);
-        console.log("quantitySpan:", quantitySpan);
-        console.log("priceElement:", priceElement);
-        console.log("addToCartBtn:", addToCartBtn);
-        console.log("confirmOrderBtn:", confirmOrderBtn);
 
         if (!decreaseBtn || !increaseBtn || !quantitySpan || !priceElement || !addToCartBtn) {
             console.error("❌ Ошибка: Один из элементов не найден на странице!");
             return;
         }
 
-        const basePrice = 15;
+        let pricePizzaElement = document.querySelector("#price");
+        let basePrice = parseFloat(pricePizzaElement.getAttribute("data-price")); // Берём цену из HTM
         let quantity = 1;
-
-        quantitySpan.textContent = quantity;
-        priceElement.textContent = (basePrice * quantity).toFixed(2) + "€";
+        const BASE_URL = "https://4437-2a00-20-8-1dfb-c3-5496-c60c-67b1.ngrok-free.app";
 
         decreaseBtn.addEventListener("click", function () {
             if (quantity > 1) {
@@ -39,7 +32,7 @@ document.addEventListener("DOMContentLoaded", function () {
         increaseBtn.addEventListener("click", function () {
             quantity++;
             quantitySpan.textContent = quantity;
-            priceElement.textContent = (basePrice * quantity).toFixed(2) + "€";
+            priceElement.textContent = (basePrice * quantity).toFixed(2) + "€"; // Округление до сотых
         });
 
         addToCartBtn.addEventListener("click", function (event) {
@@ -56,12 +49,34 @@ document.addEventListener("DOMContentLoaded", function () {
         return;
     }
 
-    console.log(`🍕 Добавляем пиццу (ID: ${pizzaId}, Кол-во: ${quantity}) в корзину...`);
+    // console.log(`🍕 Добавляем пиццу (ID: ${pizzaId}, Кол-во: ${quantity}) в корзину...`);
+    const pizzaName = addToCartBtn.getAttribute("data-name");
+    const pizzaPrice = parseFloat(addToCartBtn.getAttribute("data-price"));
+
+    function addToCart(pizzaName, pizzaPrice) {
+    let cart = JSON.parse(localStorage.getItem("cart")) || []; // Загружаем корзину из localStorage
+    let item = cart.find(p => p.name === pizzaName); // Ищем пиццу в корзине
+
+
+    if (item) {
+        item.quantity += 1; // Если уже есть, увеличиваем количество
+    } else {
+        cart.push({ name: pizzaName, quantity: 1, price:pizzaPrice }); // Иначе добавляем новый товар
+    }
+
+    localStorage.setItem("cart", JSON.stringify(cart)); // Сохраняем обратно в localStorage
+    console.log("Корзина обновлена:", cart); // Проверяем в консоли
+}
+    console.log(`🍕 Добавляем пиццу (ID: ${pizzaId}, ${pizzaName}, ${pizzaPrice} €, ${quantity} шт.) в корзину...`);
+
+    // Сохраняем в localStorage
+    addToCart(pizzaName, pizzaPrice, quantity);  // [{'name': 'Маргарита', 'quantity': 1, 'price': 15}]
+
     alert("Добавлено в корзину! Открываю консоль...");
-    fetch("/add-to-cart", {
+    fetch(`${BASE_URL}/add-to-cart`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ pizza_id: pizzaId, quantity: quantity })
+        body: JSON.stringify({ pizza_id: pizzaId, quantity: quantity, price:pizzaPrice })
     })
     .then(response => response.json())
     .then(data => {
@@ -85,7 +100,7 @@ document.addEventListener("DOMContentLoaded", function () {
         // Подтверждение заказа
         if (confirmOrderBtn) {
             confirmOrderBtn.addEventListener("click", function () {
-                fetch("/confirm_order", { method: "POST" })
+                fetch(`${BASE_URL}/confirm_order`, { method: "POST" })
                 .then(response => {
                     if (response.ok) {
                         window.location.href = "/";  // Переход на главную

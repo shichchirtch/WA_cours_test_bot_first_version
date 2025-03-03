@@ -1,4 +1,5 @@
 // Находим форму по ID и добавляем обработчик события "submit" (отправка формы)
+
 document.getElementById("orderForm").addEventListener("submit", function(event) {
     event.preventDefault(); // Останавливаем стандартную отправку формы, чтобы обработать данные вручную
 
@@ -18,21 +19,33 @@ document.getElementById("orderForm").addEventListener("submit", function(event) 
     // Валидация телефона:
     // 1. Должны быть только цифры и знак "+", никаких других символов.
     // 2. Длина номера должна быть от 12 до 14 символов.
-    if (!/^\+?\d{12,14}$/.test(phone)) {
+    if (!/^\+?\d[\d\s]{11,13}$/.test(phone)) {
         alert("Телефон должен содержать только цифры и знак +, длиной от 12 до 14 символов.");
         return; // Прекращаем выполнение, если номер не соответствует требованиям
     }
+    const cartItems = JSON.parse(localStorage.getItem("cart")) || [];  // Достаём корзину из localStorage
+    console.log('cartItems = ', cartItems)
+
+     if (cartItems.length === 0) {
+        alert("Корзина пуста! Добавьте товары перед заказом.");
+        return;
+    }
+
+     console.log("cartItems перед отправкой:", cartItems); // ✅ Проверяем, есть ли данные перед отправкой
+
 
     // Отправляем данные заказа на сервер с помощью fetch API
-    fetch("/cart", {
+    fetch(`/cart`, {
         method: "POST", // HTTP-метод запроса
         headers: { "Content-Type": "application/json" }, // Указываем, что отправляем JSON
-        body: JSON.stringify({ address, phone, payment }) // Преобразуем объект в JSON-строку
+        body: JSON.stringify({ address, phone, payment, order: cartItems}), // Преобразуем объект в JSON-строку
+
     })
     .then(response => response.json()) // Преобразуем ответ сервера в JSON
     .then(data => {
         if (data.success) { // Если сервер ответил, что заказ успешно создан
             alert("Заказ успешно оформлен!");
+            localStorage.removeItem("cart"); // Очищаем корзину после заказа
             window.location.href = "/"; // Перенаправляем пользователя на главную страницу
         } else { // Если произошла ошибка на сервере
             alert("Ошибка: " + data.error);
@@ -43,10 +56,11 @@ document.getElementById("orderForm").addEventListener("submit", function(event) 
     });
 });
 
+
 document.getElementById("resetOrder").addEventListener("click", function(event) {
     event.preventDefault(); // Отменяем стандартный переход по ссылке
 
-    fetch("/reset-cart", { method: "POST" }) // Отправляем запрос на сервер для очистки корзины
+    fetch(`/reset-cart`, { method: "POST" }) // Отправляем запрос на сервер для очистки корзины
         .then(response => response.json()) // Преобразуем ответ в JSON
         .then(data => {
             if (data.success) {
