@@ -24,13 +24,12 @@ document.getElementById("orderForm").addEventListener("submit", function(event) 
         return; // Прекращаем выполнение, если номер не соответствует требованиям
     }
     const cartItems = JSON.parse(localStorage.getItem("cart")) || [];  // Достаём корзину из localStorage
-    console.log('cartItems = ', cartItems)
+    console.log('cartItems = ', cartItems[0]['quantity'])
 
      if (cartItems.length === 0) {
         alert("Корзина пуста! Добавьте товары перед заказом.");
         return;
     }
-
      console.log("cartItems перед отправкой:", cartItems); // ✅ Проверяем, есть ли данные перед отправкой
 
 

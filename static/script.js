@@ -17,7 +17,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
 
         let pricePizzaElement = document.querySelector("#price");
-        let basePrice = parseFloat(pricePizzaElement.getAttribute("data-price")); // Берём цену из HTM
+        let basePrice = parseFloat(pricePizzaElement.getAttribute("data-price")); // Берём цену из HTML
         let quantity = 1;
         const BASE_URL = "https://4437-2a00-20-8-1dfb-c3-5496-c60c-67b1.ngrok-free.app";
 
@@ -35,6 +35,7 @@ document.addEventListener("DOMContentLoaded", function () {
             priceElement.textContent = (basePrice * quantity).toFixed(2) + "€"; // Округление до сотых
         });
 
+
         addToCartBtn.addEventListener("click", function (event) {
     event.preventDefault(); // Предотвращает повторную отправку формы, если вдруг она есть
 
@@ -49,27 +50,25 @@ document.addEventListener("DOMContentLoaded", function () {
         return;
     }
 
-    // console.log(`🍕 Добавляем пиццу (ID: ${pizzaId}, Кол-во: ${quantity}) в корзину...`);
-    const pizzaName = addToCartBtn.getAttribute("data-name");
-    const pizzaPrice = parseFloat(addToCartBtn.getAttribute("data-price"));
+    let pizzaName = document.querySelector(".pizza-title").textContent;
+    let pizzaPrice = parseFloat(document.querySelector("#price").getAttribute("data-price"));
+    let quantity = parseInt(document.querySelector("#quantity").textContent); // Количество
 
-    function addToCart(pizzaName, pizzaPrice) {
-    let cart = JSON.parse(localStorage.getItem("cart")) || []; // Загружаем корзину из localStorage
+    function addToCart(pizzaName, pizzaPrice, quantity) {
+        let cart = JSON.parse(localStorage.getItem("cart")) || []; // Загружаем корзину из localStorage
     let item = cart.find(p => p.name === pizzaName); // Ищем пиццу в корзине
-
-
     if (item) {
-        item.quantity += 1; // Если уже есть, увеличиваем количество
+        item.quantity += quantity; // Если уже есть, увеличиваем количество
     } else {
-        cart.push({ name: pizzaName, quantity: 1, price:pizzaPrice }); // Иначе добавляем новый товар
+        cart.push({ name: pizzaName, quantity: quantity, price:pizzaPrice }); // Иначе добавляем новый товар
     }
-
     localStorage.setItem("cart", JSON.stringify(cart)); // Сохраняем обратно в localStorage
     console.log("Корзина обновлена:", cart); // Проверяем в консоли
 }
+
     console.log(`🍕 Добавляем пиццу (ID: ${pizzaId}, ${pizzaName}, ${pizzaPrice} €, ${quantity} шт.) в корзину...`);
 
-    // Сохраняем в localStorage
+
     addToCart(pizzaName, pizzaPrice, quantity);  // [{'name': 'Маргарита', 'quantity': 1, 'price': 15}]
 
     alert("Добавлено в корзину! Открываю консоль...");

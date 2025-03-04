@@ -62,6 +62,7 @@ def cart_page():
 
         # Перебираем товары в заказе
         for item in order:
+            print('item = ', item)
             name = item.get("name", "Неизвестный товар")
             quantity = item.get("quantity", 1)
             price = item.get("price", 0)
@@ -91,7 +92,7 @@ def cart_page():
 def add_to_cart():
     """Добавляет выбранную пиццу в корзину."""
     data = request.get_json()
-    print('data =', data)  #  data = {'pizza_id': '3', 'quantity': 1}
+    print('data =', data)  #  data = {'pizza_id': '2', 'quantity': 2, 'price': 16}
     pizza_id = data.get("pizza_id")
     quantity = data.get("quantity")
     pizza_price = data.get("price")
@@ -105,6 +106,7 @@ def add_to_cart():
         if existing_pizza:
             existing_pizza["quantity"] += quantity  # Увеличиваем количество, если пицца уже в корзине
         else:
+            print('quantity = ', quantity)
             cart.append({"pizza_id": pizza_id, "name": pizza["name"], "quantity": quantity, 'price':pizza_price*quantity})
         return jsonify(success=True)
 
