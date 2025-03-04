@@ -27,12 +27,6 @@ async def process_start_command(message: Message, state: FSMContext):
         print("else works")
 
 
-@ch_router.message(Command('send'))
-async def send_command(message: Message, state: FSMContext):
-    await state.set_state(FSM_ST.swnd_msg)
-    await message.answer('Enter you message')
-
-
 @ch_router.message(Command('help'))
 async def help_command(message: Message, state: FSMContext):
     user_id = message.from_user.id
